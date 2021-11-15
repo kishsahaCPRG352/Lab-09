@@ -66,9 +66,9 @@
                                     <input type="checkbox" disabled>
                                 </td>
                             </c:if>
-                            <td><a href="user?action=view&amp;email=${user.email}"><i class="fas fa-user-edit"></i></a><br></td>
+                            <td><a href="user?action=view&amp;email=${user.email}">Edit<i class="fas fa-user-edit"></i></a><br></td>
                             <td>
-                                <a href="user?action=delete&amp;email=${user.email}"><i class="fas fa-user-times"></i></a><br></td>
+                                <a href="user?action=delete&amp;email=${user.email}">Delete<i class="fas fa-user-times"></i></a><br></td>
                         </tr>
                     </c:forEach>
                 </table>
