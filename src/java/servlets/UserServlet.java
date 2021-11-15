@@ -91,7 +91,7 @@ public class UserServlet extends HttpServlet {
                     String password = request.getParameter("password");
                     int role = Integer.parseInt(request.getParameter("role"));
                     if(email.length() > 0 && fname.length() > 0 && lname.length() > 0 && password.length() > 0 && role > 0){
-                    us.insert(email, 1, fname, lname, password, role);
+                    us.insert(email, true, fname, lname, password);
                     }
                     break;
                 case "save":
@@ -101,7 +101,7 @@ public class UserServlet extends HttpServlet {
                     String editPassword = request.getParameter("editPassword");
                     int editRole = Integer.parseInt(request.getParameter("editRole"));
                     if(editEmail.length() > 0 && editFname.length() > 0 && editLname.length() > 0 && editPassword.length() > 0 && editRole > 0){
-                    us.update(editEmail, editRole, editFname, editLname, editPassword, editRole);
+                    us.update(editEmail, true, editFname, editLname, editPassword);
                     }
                     break;     
             }

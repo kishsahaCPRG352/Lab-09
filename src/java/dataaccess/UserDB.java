@@ -14,8 +14,9 @@ import models.User;
 public class UserDB {
     public List<User> getAll() throws Exception {
        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+       List<User> users = new ArrayList<>();
         try {
-            User user = em.find(User.class, email);
+
             return users;
         } finally {
             em.close();
@@ -38,11 +39,9 @@ public class UserDB {
         EntityTransaction trans = em.getTransaction();
         
         try {
-            User user = user.getEmail();
-            user.getUserList().add(user);
             trans.begin();
             em.persist(user);
-            em.merge(role);
+            em.merge(user);
             trans.commit();
         } catch (Exception ex) {
             trans.rollback();
@@ -52,39 +51,33 @@ public class UserDB {
     }
 
     public void update(User user) throws Exception {
-        ConnectionPool cp = ConnectionPool.getInstance();
-        Connection con = cp.getConnection();
-        PreparedStatement ps = null;
-        String sql = "UPDATE user SET active=?, first_name=?, last_name=?, password=?, role=? WHERE email=?";
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
         
         try {
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, user.getActive());
-            ps.setString(2, user.getFname());
-            ps.setString(3, user.getLname());
-            ps.setString(4, user.getPassword());
-            ps.setInt(5, user.getRole());
-            ps.setString(6, user.getEmail());
-            ps.executeUpdate();
-        } finally {
-            DBUtil.closePreparedStatement(ps);
-            cp.freeConnection(con);
+            trans.begin();
+            em.merge(user);
+            trans.commit();
+        } catch (Exception ex) {
+            trans.rollback();
+        } finally { 
+            em.close();
         }
     }
 
     public void delete(User user) throws Exception {
-        ConnectionPool cp = ConnectionPool.getInstance();
-        Connection con = cp.getConnection();
-        PreparedStatement ps = null;
-        String sql = "DELETE FROM user WHERE email=?";
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
         
         try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, user.getEmail());
-            ps.executeUpdate();
+            trans.begin();
+            em.remove(em.merge(user));
+            em.merge(user);
+            trans.commit();
+        } catch (Exception ex) {
+            trans.rollback();
         } finally {
-            DBUtil.closePreparedStatement(ps);
-            cp.freeConnection(con);
+            em.close();
         }
         
     }
