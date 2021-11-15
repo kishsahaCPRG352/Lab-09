@@ -25,7 +25,7 @@
                     <input type="text" name="password" placeholder="Password" value="${password}"><br>
                     <select name="role">
                         <c:forEach items="${roles}" var="role">
-                            <option value ="${role.id}">${role.name}</option>
+                            <option value ="${role.roleId}">${role.roleName}</option>
                         </c:forEach>
                     </select><br>
                     <input type="hidden" name="action" value="add">
@@ -47,21 +47,21 @@
                     <c:forEach items="${users}" var="user">
                         <tr>
                             <td>${user.email}</td>
-                            <td>${user.fname}</td>
-                            <td>${user.lname}</td>
+                            <td>${user.firstName}</td>
+                            <td>${user.lastName}</td>
                             
                             <c:forEach items="${roles}" var="role">
-                                <c:if test = "${user.role eq role.id}">
-                                    <td>${role.name}</td>
+                                <c:if test = "${user.role eq role.roleId}">
+                                    <td>${role.roleName}</td>
                                 </c:if>
                             </c:forEach>
                                     
-                            <c:if test="${user.active eq 1}">
+                            <c:if test="${user.active eq true}">
                                 <td>
                                     <input type="checkbox" disabled checked>
                                 </td>
                             </c:if>
-                            <c:if test="${user.active != 1}">
+                            <c:if test="${user.active != true}">
                                 <td>
                                     <input type="checkbox" disabled>
                                 </td>
@@ -86,8 +86,8 @@
                                      <option selected value ="${role.id}">${role.name}</option>
                                 </c:if>
                                      
-                                <c:if test = "${role.id ne editUser.role}">
-                                    <option value ="${role.id}">${role.name}</option>
+                                <c:if test = "${role.roleId ne editUser.role}">
+                                    <option value ="${role.roleId}">${role.roleName}</option>
                                 </c:if>
                                     
                             </c:forEach>

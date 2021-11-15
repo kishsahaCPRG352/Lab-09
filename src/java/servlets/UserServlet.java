@@ -68,6 +68,7 @@ public class UserServlet extends HttpServlet {
         }
         
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+        return;
     }
 
     @Override

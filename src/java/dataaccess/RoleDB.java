@@ -12,10 +12,11 @@ import models.User;
 public class RoleDB {
     
     public List<Role> getAll() throws Exception {
-        List<Role> roleList = new ArrayList<>();
+
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
         try {
+            List<Role> roleList = em.createNamedQuery("Role.findAll", Role.class).getResultList();
             return roleList;
         } finally {
             em.close();
